@@ -12,7 +12,8 @@
  	distributed under the License is distributed on an "AS IS" BASIS,
 	WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 	See the License for the specific language governing permissions and
-	limitations under the License.
+	limitations under the License.
+
 -->
 <resources>
 
@@ -25,6 +26,7 @@
     <string name="about_donate_button_summary">Grab me a beer</string>
     <string name="about_version_title">Version</string>
     <string name="about_app_version">App version:</string>
+    <string name="about_app_version_oficial">Based on:</string>
     <string name="changelog">Changelog</string>
     <string name="changelog_summary">View the app\'s changelog</string>
     <string name="changelog_error">Error reading changelog</string>

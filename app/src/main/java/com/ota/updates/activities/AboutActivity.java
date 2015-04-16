@@ -16,22 +16,11 @@
 
 package com.ota.updates.activities;
 
-import in.uncod.android.bypass.Bypass;
-
-import java.io.BufferedInputStream;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.net.URL;
-import java.net.URLConnection;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.ProgressDialog;
 import android.app.AlertDialog.Builder;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -50,6 +39,18 @@ import com.google.android.gms.ads.AdView;
 import com.ota.updates.R;
 import com.ota.updates.utils.Preferences;
 import com.ota.updates.utils.Utils;
+
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.net.URL;
+import java.net.URLConnection;
+
+import in.uncod.android.bypass.Bypass;
 
 public class AboutActivity extends Activity {
 	
@@ -98,7 +99,9 @@ public class AboutActivity extends Activity {
 				openHTML + "Roman Nurik" + closeHTML + " - Android Asset Studio Framework" + newLine +
 				openHTML + "Jeff Gilfelt"+ closeHTML + " - Android Action Bar Style Generator" + newLine + 
 				openHTML + "Ficeto (AllianceROM)" + closeHTML + " - Shell tools" + newLine +
-				openHTML + "StackOverflow" + closeHTML + " - Many, many people";
+				openHTML + "StackOverflow" + closeHTML + " - Many, many people" + newLine +
+                "<hr>" + newLine +
+                openHTML + "Cadiducho & NeoIllumia Team " + closeHTML + "- G-OS Updater tweaks";
 		creditsSummary.setText(Html.fromHtml(creditsText));
 		
 		TextView versionTitle = (TextView) findViewById(R.id.about_tv_version_title);
@@ -107,7 +110,10 @@ public class AboutActivity extends Activity {
 		TextView versionSummary = (TextView) findViewById(R.id.about_tv_version_summary);
 		String appVer = getResources().getString(R.string.about_app_version);
 		String appVerActual = getResources().getString(R.string.app_version);
-		versionSummary.setText(appVer + " v" + appVerActual);
+        String otaVer = getResources().getString(R.string.about_app_version_oficial);
+        String otaVersion = getResources().getString(R.string.app_versionOficial);
+		versionSummary.setText(Html.fromHtml(appVer + " v" + appVerActual + newLine +
+            otaVer + " v" + otaVersion));
 		
 		if (Preferences.getAdsEnabled(this)) {
 			mAdView = (AdView) findViewById(R.id.adView);
