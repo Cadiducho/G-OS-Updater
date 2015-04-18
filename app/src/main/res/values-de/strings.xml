@@ -29,5 +29,7 @@
     <string name="rebooting">Wird neu gestartet&#8230;</string>
     <string name="information">Informationen</string>
     <string name="update_available">ROM-Aktualisierung verfügbar</string>
+    <string name="about_app_version_oficial">Basierend auf</string>
+    <string name="about_app_version"></string>
 
 </resources>

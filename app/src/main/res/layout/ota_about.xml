@@ -25,7 +25,9 @@
         android:orientation="vertical" >
         
         <include layout="@layout/card_version" />
-        
+
+        <include layout="@layout/card_changelog_g" />
+
         <include layout="@layout/card_changelog" />
 
         <include layout="@layout/card_credits" />

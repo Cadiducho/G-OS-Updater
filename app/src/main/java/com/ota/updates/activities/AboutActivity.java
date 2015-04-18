@@ -110,7 +110,7 @@ public class AboutActivity extends Activity {
 		TextView versionSummary = (TextView) findViewById(R.id.about_tv_version_summary);
 		String appVer = getResources().getString(R.string.about_app_version);
 		String appVerActual = getResources().getString(R.string.app_version);
-        String otaVer = getResources().getString(R.string.about_app_version_oficial);
+        String otaVer = getResources().getString(R.string.about_app_version_oficial) + ":";
         String otaVersion = getResources().getString(R.string.app_versionOficial);
 		versionSummary.setText(Html.fromHtml(appVer + " v" + appVerActual + newLine +
             otaVer + " v" + otaVersion));
@@ -167,6 +167,22 @@ public class AboutActivity extends Activity {
 		dialog.setPositiveButton(R.string.done, null);
 		dialog.show();
 	}
+
+    @SuppressLint("InflateParams")
+    private void showgChangelogDialog(String changelogText) {
+        View view = getLayoutInflater().inflate(R.layout.ota_g_changelog_layout, null);
+        TextView changelog = (TextView) view.findViewById(R.id.changelog);
+
+        Bypass bypass = new Bypass(mContext);
+        CharSequence string = bypass.markdownToSpannable(changelogText);
+        changelog.setText(string);
+
+        Builder dialog = new AlertDialog.Builder(mContext);
+        dialog.setTitle(R.string.changelog_g);
+        dialog.setView(view);
+        dialog.setPositiveButton(R.string.done, null);
+        dialog.show();
+    }
 	
 	public void openAppDonate(View v) {
 		setupDonateDialog();
@@ -175,6 +191,10 @@ public class AboutActivity extends Activity {
 	public void openChangelog(View v) {
 		new Changelog().execute();
 	}
+
+    public void opengChangelog(View v) {
+        new gChangelog().execute();
+    }
 	
 	@Override
 	public void onResume() {
@@ -191,93 +211,182 @@ public class AboutActivity extends Activity {
 			mAdView.pause();
 		}
 	}
-	
-	public class Changelog extends AsyncTask<Void, Void, String> {
-		
-		private ProgressDialog mLoadingDialog;
-		private static final String CHANGELOG = "Changelog.md";
-		private static final String TAG = "AboutActivity.Changelog";
-		private File mChangelogFile;
-		
-		@Override
-		protected void onPreExecute(){
 
-			// Show a loading/progress dialog while the search is being performed
-			mLoadingDialog = new ProgressDialog(mContext);
-			mLoadingDialog.setIndeterminate(true);
-			mLoadingDialog.setCancelable(false);
-			mLoadingDialog.setMessage(mContext.getResources().getString(R.string.loading));
-			mLoadingDialog.show();
+    public class Changelog extends AsyncTask<Void, Void, String> {
 
-			// Delete any existing manifest file before we attempt to download a new one
-			mChangelogFile = new File(mContext.getFilesDir().getPath(), CHANGELOG);
-			if(mChangelogFile.exists()) {
-				mChangelogFile.delete();
-			}
-		}
+        private ProgressDialog mLoadingDialog;
+        private static final String CHANGELOG = "Changelog.md";
+        private static final String TAG = "AboutActivity.Changelog";
+        private File mChangelogFile;
 
-		@Override
-		protected String doInBackground(Void... params) {
-			try {
-				InputStream input = null;
+        @Override
+        protected void onPreExecute(){
 
-				String urlStr = "https://raw.githubusercontent.com/Kryten2k35/OTAUpdates/stable/Changelog.md";
-				URL url = new URL(urlStr);
-				URLConnection connection = url.openConnection();
-				connection.connect();
-				// download the file
-				input = new BufferedInputStream(url.openStream());
+            // Show a loading/progress dialog while the search is being performed
+            mLoadingDialog = new ProgressDialog(mContext);
+            mLoadingDialog.setIndeterminate(true);
+            mLoadingDialog.setCancelable(false);
+            mLoadingDialog.setMessage(mContext.getResources().getString(R.string.loading));
+            mLoadingDialog.show();
 
-				OutputStream output = mContext.openFileOutput(
-						CHANGELOG, Context.MODE_PRIVATE);
+            // Delete any existing manifest file before we attempt to download a new one
+            mChangelogFile = new File(mContext.getFilesDir().getPath(), CHANGELOG);
+            if(mChangelogFile.exists()) {
+                mChangelogFile.delete();
+            }
+        }
 
-				byte data[] = new byte[1024];
-				int count;
-				while ((count = input.read(data)) != -1) {
-					output.write(data, 0, count);
-				}
+        @Override
+        protected String doInBackground(Void... params) {
+            try {
+                InputStream input = null;
 
-				output.flush();
-				output.close();
-				input.close();
+                String urlStr = "https://raw.githubusercontent.com/Kryten2k35/OTAUpdates/stable/Changelog.md";
+                URL url = new URL(urlStr);
+                URLConnection connection = url.openConnection();
+                connection.connect();
+                // download the file
+                input = new BufferedInputStream(url.openStream());
 
-				// file finished downloading, parse it!
+                OutputStream output = mContext.openFileOutput(
+                        CHANGELOG, Context.MODE_PRIVATE);
 
-			} catch (Exception e) {
-				Log.d(TAG, "Exception: " + e.getMessage());
-			}
-			
-			InputStreamReader inputReader = null;
-	        String text = null;
+                byte data[] = new byte[1024];
+                int count;
+                while ((count = input.read(data)) != -1) {
+                    output.write(data, 0, count);
+                }
 
-	        try {
-	            StringBuilder data = new StringBuilder();
-	            char tmp[] = new char[2048];
-	            int numRead;
-	            inputReader = new FileReader(mChangelogFile);
-	            while ((numRead = inputReader.read(tmp)) >= 0) {
-	                data.append(tmp, 0, numRead);
-	            }
-	            text = data.toString();
-	        } catch (IOException e) {
-	            text = getString(R.string.changelog_error);
-	        } finally {
-	            try {
-	                if (inputReader != null) {
-	                    inputReader.close();
-	                }
-	            } catch (IOException e) {
-	            }
-	        }
-			return text;
-		}
-		
-		@Override
-		protected void onPostExecute(String result) {
-			mLoadingDialog.cancel();
-			showChangelogDialog(result);
-			super.onPostExecute(result);
-		}
-		
-	}
+                output.flush();
+                output.close();
+                input.close();
+
+                // file finished downloading, parse it!
+
+            } catch (Exception e) {
+                Log.d(TAG, "Exception: " + e.getMessage());
+            }
+
+            InputStreamReader inputReader = null;
+            String text = null;
+
+            try {
+                StringBuilder data = new StringBuilder();
+                char tmp[] = new char[2048];
+                int numRead;
+                inputReader = new FileReader(mChangelogFile);
+                while ((numRead = inputReader.read(tmp)) >= 0) {
+                    data.append(tmp, 0, numRead);
+                }
+                text = data.toString();
+            } catch (IOException e) {
+                text = getString(R.string.changelog_error);
+            } finally {
+                try {
+                    if (inputReader != null) {
+                        inputReader.close();
+                    }
+                } catch (IOException e) {
+                }
+            }
+            return text;
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            mLoadingDialog.cancel();
+            showChangelogDialog(result);
+            super.onPostExecute(result);
+        }
+
+    }
+
+    public class gChangelog extends AsyncTask<Void, Void, String> {
+
+        private ProgressDialog mLoadingDialog;
+        private static final String CHANGELOG = "gChangelog.md";
+        private static final String TAG = "AboutActivity.Changelog";
+        private File mChangelogFile;
+
+        @Override
+        protected void onPreExecute(){
+
+            // Show a loading/progress dialog while the search is being performed
+            mLoadingDialog = new ProgressDialog(mContext);
+            mLoadingDialog.setIndeterminate(true);
+            mLoadingDialog.setCancelable(false);
+            mLoadingDialog.setMessage(mContext.getResources().getString(R.string.loading));
+            mLoadingDialog.show();
+
+            // Delete any existing manifest file before we attempt to download a new one
+            mChangelogFile = new File(mContext.getFilesDir().getPath(), CHANGELOG);
+            if(mChangelogFile.exists()) {
+                mChangelogFile.delete();
+            }
+        }
+
+        @Override
+        protected String doInBackground(Void... params) {
+            try {
+                InputStream input = null;
+
+                String urlStr = "https://raw.githubusercontent.com/Cadiducho/G-OS-Updater/g-os/gChangelog.md";
+                URL url = new URL(urlStr);
+                URLConnection connection = url.openConnection();
+                connection.connect();
+                // download the file
+                input = new BufferedInputStream(url.openStream());
+
+                OutputStream output = mContext.openFileOutput(
+                        CHANGELOG, Context.MODE_PRIVATE);
+
+                byte data[] = new byte[1024];
+                int count;
+                while ((count = input.read(data)) != -1) {
+                    output.write(data, 0, count);
+                }
+
+                output.flush();
+                output.close();
+                input.close();
+
+                // file finished downloading, parse it!
+
+            } catch (Exception e) {
+                Log.d(TAG, "Exception: " + e.getMessage());
+            }
+
+            InputStreamReader inputReader = null;
+            String text = null;
+
+            try {
+                StringBuilder data = new StringBuilder();
+                char tmp[] = new char[2048];
+                int numRead;
+                inputReader = new FileReader(mChangelogFile);
+                while ((numRead = inputReader.read(tmp)) >= 0) {
+                    data.append(tmp, 0, numRead);
+                }
+                text = data.toString();
+            } catch (IOException e) {
+                text = getString(R.string.changelog_error);
+            } finally {
+                try {
+                    if (inputReader != null) {
+                        inputReader.close();
+                    }
+                } catch (IOException e) {
+                }
+            }
+            return text;
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            mLoadingDialog.cancel();
+            showChangelogDialog(result);
+            super.onPostExecute(result);
+        }
+
+    }
 }

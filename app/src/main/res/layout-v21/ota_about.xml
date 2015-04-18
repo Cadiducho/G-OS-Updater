@@ -31,7 +31,7 @@
         android:layout_height="10dp"
         android:background="@drawable/toolbar_dropshadow" />
 
-    <ScrollView 
+    <ScrollView
         android:layout_width="fill_parent"
 	    android:layout_height="wrap_content"
 	    android:scrollbars="vertical" >
@@ -42,8 +42,14 @@
 	        android:orientation="vertical" >
 	        
 	        <include layout="@layout/card_version" />
-	        
-	        <include layout="@layout/card_changelog" />
+
+            <include
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                layout="@layout/card_changelog_g"
+                android:layout_gravity="center_horizontal" />
+
+            <include layout="@layout/card_changelog" />
 	
 	        <include layout="@layout/card_credits" />
 	

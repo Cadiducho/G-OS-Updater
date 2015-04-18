@@ -12,7 +12,8 @@
  	distributed under the License is distributed on an "AS IS" BASIS,
 	WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 	See the License for the specific language governing permissions and
-	limitations under the License.
+	limitations under the License.
+
 -->
 <resources>
 
@@ -125,5 +126,6 @@
     <string name="notifications_sound">Звук</string>
     <string name="notifications_vibrate">Вибрация</string>
     <string name="silent_ringtone">Без звука</string>
+    <string name="about_app_version_oficial">Oсновано на</string>
 
 </resources>

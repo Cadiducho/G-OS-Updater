@@ -12,7 +12,8 @@
  	distributed under the License is distributed on an "AS IS" BASIS,
 	WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 	See the License for the specific language governing permissions and
-	limitations under the License.
+	limitations under the License.
+
 -->
 <resources>
 
@@ -31,5 +32,6 @@
     <string name="rebooting">Reiniciando&#8230;</string>
     <string name="information">Informação</string>
     <string name="update_available">Atualização da ROM disponível</string>
+    <string name="about_app_version_oficial">Baseado em</string>
 
 </resources>
