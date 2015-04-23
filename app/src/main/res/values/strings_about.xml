@@ -27,7 +27,7 @@
     <string name="about_version_title">Version</string>
     <string name="about_app_version">App version:</string>
     <string name="about_app_version_oficial">Based on</string>
-    <string name="changelog" translatable="false">Changelog</string>
+    <string name="changelog" translatable="false">OTA Update\'s Changelog</string>
     <string name="changelog_summary" translatable="false">View the OTA Updates\'s changelog</string>
     <string name="changelog_error" translatable="false">Error reading changelog</string>
     <string name="changelog_g" translatable="false">G-Updater Changelog</string>

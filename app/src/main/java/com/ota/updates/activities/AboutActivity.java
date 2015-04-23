@@ -192,7 +192,7 @@ public class AboutActivity extends Activity {
 		new Changelog().execute();
 	}
 
-    public void opengChangelog(View v) {
+    public void openChangelogGOS(View v) {
         new gChangelog().execute();
     }
 	

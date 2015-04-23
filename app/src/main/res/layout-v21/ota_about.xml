@@ -43,11 +43,7 @@
 	        
 	        <include layout="@layout/card_version" />
 
-            <include
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                layout="@layout/card_changelog_g"
-                android:layout_gravity="center_horizontal" />
+            <include layout="@layout/card_changelog_g" />
 
             <include layout="@layout/card_changelog" />
 	
