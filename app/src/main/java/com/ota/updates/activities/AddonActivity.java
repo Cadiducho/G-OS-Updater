@@ -1,22 +1,9 @@
 package com.ota.updates.activities;
 
-import in.uncod.android.bypass.Bypass;
-
-import java.io.BufferedInputStream;
-import java.io.File;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.net.URL;
-import java.net.URLConnection;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Locale;
-
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.app.AlertDialog.Builder;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -45,6 +32,19 @@ import com.ota.updates.utils.Constants;
 import com.ota.updates.utils.Preferences;
 import com.ota.updates.utils.Utils;
 
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.URL;
+import java.net.URLConnection;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Locale;
+
+import in.uncod.android.bypass.Bypass;
+
 public class AddonActivity extends Activity implements Constants {
 
 	public final static String TAG = "AddonActivity";
@@ -58,16 +58,13 @@ public class AddonActivity extends Activity implements Constants {
 	public void onCreate(Bundle savedInstanceState) {
 		mContext = this;
 		setTheme(Preferences.getTheme(mContext));
-		boolean isLollipop = Utils.isLollipop();
 
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.ota_addons);
 
-		if (isLollipop) {
-			Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_addons);
-			setActionBar(toolbar);
-			toolbar.setTitle(getResources().getString(R.string.app_name));
-		}
+		Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_addons);
+	    setActionBar(toolbar);
+		toolbar.setTitle(getResources().getString(R.string.app_name));
 
 		mListview = (ListView) findViewById(R.id.listview);
 		mDownloadAddon = new DownloadAddon();

@@ -16,13 +16,6 @@
 
 package com.ota.updates.utils;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.text.DecimalFormat;
-import java.util.Calendar;
-
 import android.annotation.SuppressLint;
 import android.app.AlarmManager;
 import android.app.NotificationManager;
@@ -32,7 +25,6 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
-import android.os.Build;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationCompat.Builder;
 import android.support.v4.app.TaskStackBuilder;
@@ -46,6 +38,13 @@ import com.ota.updates.RomUpdate;
 import com.ota.updates.activities.AvailableActivity;
 import com.ota.updates.activities.MainActivity;
 import com.ota.updates.receivers.AppReceiver;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.text.DecimalFormat;
+import java.util.Calendar;
 
 public class Utils implements Constants{
 
@@ -221,9 +220,9 @@ public class Utils implements Constants{
 		return activeNetwork.getType() == ConnectivityManager.TYPE_MOBILE;
 	}
 
-	public static boolean isLollipop() {	
+	/*public static boolean isLollipop() { Of Course is Lollipop
 		return Build.VERSION.SDK_INT >= 21;
-	}
+	}*/
 
 	private static boolean versionBiggerThan(String current, String manifest) {
 		// returns true if current > manifest, false otherwise

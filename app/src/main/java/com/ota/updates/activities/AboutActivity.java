@@ -38,7 +38,6 @@ import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.ota.updates.R;
 import com.ota.updates.utils.Preferences;
-import com.ota.updates.utils.Utils;
 
 import java.io.BufferedInputStream;
 import java.io.File;
@@ -65,11 +64,10 @@ public class AboutActivity extends Activity {
 		setContentView(R.layout.ota_about);
 
 
-		if (Utils.isLollipop()) {
-			Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_about);
-			setActionBar(toolbar);
-			toolbar.setTitle(getResources().getString(R.string.app_name));
-		}
+		Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_about);
+		setActionBar(toolbar);
+		toolbar.setTitle(getResources().getString(R.string.app_name));
+
 
 		Typeface typeFace = Typeface.createFromAsset(getAssets(),"fonts/Roboto-Light.ttf");
 
@@ -83,14 +81,11 @@ public class AboutActivity extends Activity {
 		creditsTitle.setTypeface(typeFace);
 
 		String openHTML = "";
-		if (Utils.isLollipop()) {
-			if (Preferences.getCurrentTheme(this) == 0) { // Light
-				openHTML = "<font color='#009688'>";
-			} else {
-				openHTML = "<font color='#80cbc4'>";
-			}
+
+		if (Preferences.getCurrentTheme(this) == 0) { // Light
+			openHTML = "<font color='#009688'>";
 		} else {
-			openHTML = "<font color='#33b5e5'>";
+			openHTML = "<font color='#80cbc4'>";
 		}
 		String closeHTML = "</font>";
 		String newLine = "<br />";

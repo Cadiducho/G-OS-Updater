@@ -104,11 +104,7 @@ public class Preferences implements Constants{
 	}
 	
 	public static int getCurrentTheme(Context context) {
-		if (Utils.isLollipop()) {
-			return Integer.parseInt(getPrefs(context).getString(CURRENT_THEME, "0")); // #0 is the Light Theme
-		} else {
-			return Integer.parseInt(getPrefs(context).getString(CURRENT_THEME, "2")); // #2 is the Dark Theme
-		}
+		return Integer.parseInt(getPrefs(context).getString(CURRENT_THEME, "0")); // #0 is the Light Theme
 	}
 	
 	public static int getTheme(Context context)
@@ -122,11 +118,7 @@ public class Preferences implements Constants{
         case 2:
             return R.style.Theme_RagnarDark;
         default:
-        	if (Utils.isLollipop()) {
-        		return R.style.Theme_RagnarLight;
-        	} else {
-        		return R.style.Theme_RagnarDark;
-        	}
+        	return R.style.Theme_RagnarLight;
         }
     }
 	
@@ -141,11 +133,7 @@ public class Preferences implements Constants{
         case 2:
             return R.style.Theme_RagnarDark_Settings;
         default:
-        	if (Utils.isLollipop()) {
-        		return R.style.Theme_RagnarLight_Settings;
-        	} else {
-        		return R.style.Theme_RagnarDark_Settings;
-        	}
+        	return R.style.Theme_RagnarLight_Settings;
         }
     }
 

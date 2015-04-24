@@ -16,9 +16,6 @@
 
 package com.ota.updates.receivers;
 
-import java.util.Iterator;
-import java.util.Set;
-
 import android.app.DownloadManager;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -41,6 +38,9 @@ import com.ota.updates.tasks.LoadUpdateManifest;
 import com.ota.updates.utils.Constants;
 import com.ota.updates.utils.Preferences;
 import com.ota.updates.utils.Utils;
+
+import java.util.Iterator;
+import java.util.Set;
 
 public class AppReceiver extends BroadcastReceiver implements Constants{
 
@@ -128,22 +128,14 @@ public class AppReceiver extends BroadcastReceiver implements Constants{
 					if (DEBUGGING)
 						Log.w(TAG, "Download Failed");
 					Preferences.setDownloadFinished(context, false);
-					if (Utils.isLollipop()) {
-						AvailableActivity.setupMenuToolbar(); // Reset options menu
-					} else {
-						AvailableActivity.invalidateMenu();
-					}
+					AvailableActivity.setupMenuToolbar(); // Reset options menu
 					return;
 				} else {
 					if (DEBUGGING)
 						Log.v(TAG, "Download Succeeded");
 					Preferences.setDownloadFinished(context, true);
 					AvailableActivity.setupProgress(context);
-					if (Utils.isLollipop()) {
-						AvailableActivity.setupMenuToolbar(); // Reset options menu
-					} else {
-						AvailableActivity.invalidateMenu();
-					}
+					AvailableActivity.setupMenuToolbar(); // Reset options menu
 					return;
 				}
 			}

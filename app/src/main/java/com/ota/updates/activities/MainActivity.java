@@ -16,13 +16,7 @@
 
 package com.ota.updates.activities;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
-
 import android.annotation.SuppressLint;
-import android.app.ActionBar;
-import android.app.ActionBar.LayoutParams;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
@@ -40,8 +34,6 @@ import android.support.v7.widget.CardView;
 import android.text.Html;
 import android.text.format.DateFormat;
 import android.util.Log;
-import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -58,6 +50,10 @@ import com.ota.updates.utils.Constants;
 import com.ota.updates.utils.Preferences;
 import com.ota.updates.utils.Utils;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
 public class MainActivity extends Activity implements Constants{
 
 	public final String TAG = this.getClass().getSimpleName();
@@ -68,7 +64,6 @@ public class MainActivity extends Activity implements Constants{
 	private Builder mDonateDialog;
 	private Builder mPlayStoreDialog;
 
-	private boolean isLollipop;
 	
 	private AdView mAdView;
 	private AdRequest mAdRequest;
@@ -97,27 +92,13 @@ public class MainActivity extends Activity implements Constants{
 
 		mContext = this;
 		setTheme(Preferences.getTheme(mContext));
-		isLollipop = Utils.isLollipop();
 
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.ota_main);
 
-		if (isLollipop) {
-			Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_main);
-			setActionBar(toolbar);
-			toolbar.setTitle(getResources().getString(R.string.app_name));
-		} else {
-			// Custom ActionBar view
-			ActionBar actionBar = getActionBar();
-			actionBar.setTitle(R.string.app_name);
-			LayoutParams layoutParams = new LayoutParams(LayoutParams.WRAP_CONTENT,
-					LayoutParams.WRAP_CONTENT,
-					Gravity.END |
-					Gravity.CENTER_VERTICAL);
-			View actionbarView = LayoutInflater.from(this).inflate(R.layout.ota_main_actionbar_top, null);
-			actionBar.setCustomView(actionbarView, layoutParams);
-			actionBar.setDisplayShowCustomEnabled(true);
-		}
+		Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_main);
+		setActionBar(toolbar);
+		toolbar.setTitle(getResources().getString(R.string.app_name));
 
 		createDialogs();
 
@@ -187,17 +168,15 @@ public class MainActivity extends Activity implements Constants{
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		if (isLollipop)
-			getMenuInflater().inflate(R.menu.ota_menu_main, menu);
+		getMenuInflater().inflate(R.menu.ota_menu_main, menu);
 		return true;
 	}
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// Handle item selection
-		if (isLollipop)
-			switch (item.getItemId()) {
-			case R.id.menu_info:
+		switch (item.getItemId()) {
+		    case R.id.menu_info:
 				openHelp(null);
 				return true;
 			case R.id.menu_settings:
@@ -304,14 +283,10 @@ public class MainActivity extends Activity implements Constants{
 			if (Preferences.getDownloadFinished(mContext)) { //  Update already finished?
 				updateAvailableTitle.setText(getResources().getString(R.string.main_update_finished));
 				String htmlColorOpen = "";
-				if (isLollipop) {
-					if (Preferences.getCurrentTheme(mContext) == 0) { // Light
-						htmlColorOpen = "<font color='#009688'>";
-					} else {
-						htmlColorOpen = "<font color='#80cbc4'>";
-					}
+				if (Preferences.getCurrentTheme(mContext) == 0) { // Light
+					htmlColorOpen = "<font color='#009688'>";
 				} else {
-					htmlColorOpen = "<font color='#33b5e5'>";
+					htmlColorOpen = "<font color='#80cbc4'>";
 				}
 				String htmlColorClose = "</font>";
 				String updateSummary = RomUpdate.getFilename(mContext)
@@ -324,14 +299,10 @@ public class MainActivity extends Activity implements Constants{
 				updateAvailableTitle.setText(getResources().getString(R.string.main_update_progress));
 				mProgressBar.setVisibility(View.VISIBLE);
 				String htmlColorOpen = "";
-				if (isLollipop) {
-					if (Preferences.getCurrentTheme(mContext) == 0) { // Light
-						htmlColorOpen = "<font color='#009688'>";
-					} else {
-						htmlColorOpen = "<font color='#80cbc4'>";
-					}
+				if (Preferences.getCurrentTheme(mContext) == 0) { // Light
+					htmlColorOpen = "<font color='#009688'>";
 				} else {
-					htmlColorOpen = "<font color='#33b5e5'>";
+					htmlColorOpen = "<font color='#80cbc4'>";
 				}
 				String htmlColorClose = "</font>";
 				String updateSummary = htmlColorOpen
@@ -341,14 +312,10 @@ public class MainActivity extends Activity implements Constants{
 			} else {
 				updateAvailableTitle.setText(getResources().getString(R.string.main_update_available));
 				String htmlColorOpen = "";
-				if (isLollipop) {
-					if (Preferences.getCurrentTheme(mContext) == 0) { // Light
-						htmlColorOpen = "<font color='#009688'>";
-					} else {
-						htmlColorOpen = "<font color='#80cbc4'>";
-					}
+				if (Preferences.getCurrentTheme(mContext) == 0) { // Light
+					htmlColorOpen = "<font color='#009688'>";
 				} else {
-					htmlColorOpen = "<font color='#33b5e5'>";
+					htmlColorOpen = "<font color='#80cbc4'>";
 				}
 				String htmlColorClose = "</font>";
 				String updateSummary = RomUpdate.getFilename(mContext)
@@ -409,14 +376,10 @@ public class MainActivity extends Activity implements Constants{
 
 	private void updateRomInformation() {
 		String htmlColorOpen = "";
-		if (isLollipop) {
-			if (Preferences.getCurrentTheme(mContext) == 0) { // Light
-				htmlColorOpen = "<font color='#009688'>";
-			} else {
-				htmlColorOpen = "<font color='#80cbc4'>";
-			}
+		if (Preferences.getCurrentTheme(mContext) == 0) { // Light
+			htmlColorOpen = "<font color='#009688'>";
 		} else {
-			htmlColorOpen = "<font color='#33b5e5'>";
+			htmlColorOpen = "<font color='#80cbc4'>";
 		}
 		String htmlColorClose = "</font>";
 
